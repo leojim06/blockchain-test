@@ -1,25 +1,14 @@
-import express, { Application, Request, Response } from "express";
+import util from 'util';
+import Block from "./blockchange/block";
+import BlockChain from "./blockchange/blockchain";
 
-const app: Application = express();
-const port = 3000;
+let block1 = new Block({ from: "Joe", to: "Jane" })
+let block2 = new Block({ from: "Jane", to: "Carl" })
 
-// Body parsing Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+let chain = new BlockChain()
+chain.addNewBlock(block1)
+chain.addNewBlock(block2)
 
-app.get(
-    "/",
-    async (req: Request, res: Response): Promise<Response> => {
-        return res.status(200).send({
-            message: "Hello World!",
-        });
-    }
-);
-
-try {
-    app.listen(port, (): void => {
-        console.log(`Connected successfully on port ${port}`);
-    });
-} catch (error) {
-    console.error(`Error occured: ${error.message}`);
-}
+console.log(util.inspect(chain, true, null, true))
+console.log(`Validity: ${chain.checkChainValidity()}`)
+console.log(`Last block: ${util.inspect(chain.obtainLastesBlock(), true, null, true)}`)
