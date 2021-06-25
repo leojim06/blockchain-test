@@ -1,7 +1,7 @@
 import util from 'util';
 import chalk from 'chalk';
-import Block from "./blockchange/block";
-import BlockChain from "./blockchange/blockchain";
+import Block from "./blockchain/block";
+import BlockChain from "./blockchain/blockchain";
 
 let block1 = new Block({ from: "Joe", to: "Jane" })
 let block2 = new Block({ from: "Jane", to: "Carl" })
