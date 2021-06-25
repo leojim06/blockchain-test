@@ -1,4 +1,5 @@
 import util from 'util';
+import chalk from 'chalk';
 import Block from "./blockchange/block";
 import BlockChain from "./blockchange/blockchain";
 
@@ -9,6 +10,6 @@ let chain = new BlockChain()
 chain.addNewBlock(block1)
 chain.addNewBlock(block2)
 
-console.log(util.inspect(chain, true, null, true))
-console.log(`Validity: ${chain.checkChainValidity()}`)
-console.log(`Last block: ${util.inspect(chain.obtainLastesBlock(), true, null, true)}`)
+console.log(chalk.italic.magentaBright('Validity:'), `${chain.checkChainValidity()}`)
+console.log(chalk.italic.magentaBright('Last block:'), `${util.inspect(chain.obtainLastesBlock(), false, null, true)}`)
+console.log(chalk.italic.magentaBright('Blockchain:'), `${util.inspect(chain.obtainBlockChain(), false, null, true)}`)

@@ -1,18 +1,16 @@
 import Block from "./block"
 
 class BlockChain {
-    blockchain: Block[]
+    private blockchain: Block[]
     constructor() {
         this.blockchain = [this.startGenesisBlock()]
     }
 
-    startGenesisBlock(): Block {
-        return new Block({})
-    }
+    startGenesisBlock = (): Block => new Block({})
 
-    obtainLastesBlock(): Block {
-        return this.blockchain[this.blockchain.length - 1]
-    }
+    obtainLastesBlock = (): Block => this.blockchain[this.blockchain.length - 1]
+
+    obtainBlockChain = (): Block[] => this.blockchain
 
     addNewBlock(newBlock: Block): void {
         newBlock.prevHash = this.obtainLastesBlock().hash
@@ -21,16 +19,12 @@ class BlockChain {
     }
 
     checkChainValidity(): boolean {
-        for (let i = 1; i < this.blockchain.length; i++) {
-            const currBlock = this.blockchain[i]
-            const prevBlock = this.blockchain[i - 1]
-
-            if (currBlock.hash !== currBlock.computeHash())
-                return false
-
-            if (currBlock.prevHash !== prevBlock.hash)
-                return false
-        }
+        this.blockchain.forEach((block, index) => {
+            if (index > 0) {
+                if (block.hash !== block.computeHash()) return false
+                if (block.prevHash !== this.blockchain[index - 1].hash) return false
+            }
+        })
         return true
     }
 }
